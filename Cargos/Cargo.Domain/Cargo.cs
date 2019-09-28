@@ -1,6 +1,6 @@
-﻿using Cargo.Domain.Base;
+﻿using Cargos.Domain.Base;
 
-namespace Cargo.Domain
+namespace Cargos.Domain
 {
     public class Cargo : Domain<long>
     {

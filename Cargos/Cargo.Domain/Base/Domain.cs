@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cargo.Domain.Base
+namespace Cargos.Domain.Base
 {
     public class Domain<TKey> : IDomain<TKey> where TKey : IEquatable<TKey>
     {

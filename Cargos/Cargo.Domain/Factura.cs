@@ -1,7 +1,7 @@
-﻿using Cargo.Domain.Base;
+﻿using Cargos.Domain.Base;
 using System.Collections.Generic;
 
-namespace Cargo.Domain
+namespace Cargos.Domain
 {
     public class Factura : Domain<long>
     {

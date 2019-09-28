@@ -1,7 +1,7 @@
-﻿using Cargo.Domain.Base;
+﻿using Cargos.Domain.Base;
 using System;
 
-namespace Cargo.Domain
+namespace Cargos.Domain
 {
     public class Evento : Domain<long>
     {
