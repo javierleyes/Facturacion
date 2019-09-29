@@ -1,4 +1,6 @@
 ﻿using Cargos.Infraesctructure;
+using Cargos.Infrastructure.Implement;
+using Cargos.Infrastructure.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +23,14 @@ namespace Cargos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // config context bd
             services.AddDbContext<CargosDBContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
+
+            // IoC repositories
+            services.AddSingleton<ICargoRepository, CargoRepository>();
+            services.AddSingleton<IFacturaRepository, FacturaRepository>();
+            services.AddSingleton<IEventoRepository, EventoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

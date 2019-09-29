@@ -21,6 +21,5 @@ namespace Cargos.Infrastructure.Base
         TEntity Save(TEntity entity);
 
         TEntity Update(TEntity entity);
-
     }
 }
