@@ -5,20 +5,20 @@ namespace Cargos.Domain
 {
     public class Evento : Domain<long>
     {
-        public long IdUsuario { get; set; }
-        public Moneda Moneda { get; set; }
-        public decimal Monto { get; set; }
-        public DateTime Fecha { get; set; }
-        public TipoEvento Tipo { get; set; }
+        public long User_Id { get; set; }
+        public Currency Currency { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime Date { get; set; }
+        public TypeEvento Type { get; set; }
     }
 
-    public enum Moneda
+    public enum Currency
     {
         Peso = 1,
         Dolar = 2,
     }
 
-    public enum TipoEvento
+    public enum TypeEvento
     {
         Clasificado = 1,
         Venta = 2,
