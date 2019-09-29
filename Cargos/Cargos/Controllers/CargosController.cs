@@ -44,22 +44,32 @@ namespace Cargos.API.Controllers
             //if (!ModelState.IsValid)
             //    return BadRequest();
 
-            Domain.Evento evento = new Domain.Evento()
-            {
-                Amount = input.Amount,
-                Date = input.Date,
-                User_Id = input.User_id,
-
-                // cambiar por descripcion
-                Type = Domain.TypeEvento.Clasificado,
-                Currency = Domain.Currency.Dolar,
-            };
+            Domain.Evento evento = CreateEvento(input);
 
             CheckBillCurrentPeriod(evento);
 
             CreateCargo(evento);
 
             return StatusCode(StatusCodes.Status201Created);
+        }
+
+        private Domain.Evento CreateEvento(EventoInputDataContract input)
+        {
+            Domain.Evento evento = new Domain.Evento()
+            {
+                Amount = input.Amount,
+                Date = input.Date,
+                User_Id = input.User_id,
+                Event_Id = input.Event_id,
+
+                // cambiar por descripcion
+                Type = Domain.TypeEvento.Clasificado,
+                Currency = Domain.Currency.Dolar,
+            };
+
+            EventoRepository.Save(evento);
+
+            return evento;
         }
 
         private void CheckBillCurrentPeriod(Domain.Evento evento)
@@ -79,7 +89,7 @@ namespace Cargos.API.Controllers
                 Year = evento.Date.Year,
             };
 
-            this.FacturaRepository.Update(bill);
+            this.FacturaRepository.Save(bill);
         }
 
         private void CreateCargo(Domain.Evento evento)

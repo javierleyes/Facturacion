@@ -1,4 +1,5 @@
 ﻿using Cargos.Domain.Base;
+using Cargos.Infraesctructure;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -6,36 +7,36 @@ using System.Linq.Expressions;
 
 namespace Cargos.Infrastructure.Base
 {
-    public class BaseRepository<TEntity> : BaseRepository<TEntity, long, DbContext>
+    public class BaseRepository<TEntity> : BaseRepository<TEntity, long, ApplicationDBContext>
       where TEntity : Domain<long>
     {
-        public BaseRepository(DbContext dbContext) : base(dbContext)
+        public BaseRepository(ApplicationDBContext applicationDBContext) : base(applicationDBContext)
         { }
     }
 
-    public class BaseRepository<TEntity, TKey> : BaseRepository<TEntity, TKey, DbContext>
+    public class BaseRepository<TEntity, TKey> : BaseRepository<TEntity, TKey, ApplicationDBContext>
        where TEntity : Domain<TKey>
        where TKey : IEquatable<TKey>
     {
-        public BaseRepository(DbContext dbContext) : base(dbContext)
+        public BaseRepository(ApplicationDBContext applicationDBContext) : base(applicationDBContext)
         { }
     }
 
-    public class BaseRepository<TEntity, TKey, TDbContext> : IBaseRepository<TEntity, TKey>
+    public class BaseRepository<TEntity, TKey, TApplicationDbContext> : IBaseRepository<TEntity, TKey>
         where TEntity : class, IDomain<TKey>
         where TKey : IEquatable<TKey>
-        where TDbContext : DbContext
+        where TApplicationDbContext : ApplicationDBContext
     {
-        protected virtual TDbContext DbContext { get; set; }
+        protected virtual TApplicationDbContext ApplicationDBContext { get; set; }
 
-        public BaseRepository(TDbContext dbContext)
+        public BaseRepository(TApplicationDbContext applicationDBContext)
         {
-            DbContext = dbContext;
+            ApplicationDBContext = applicationDBContext;
         }
 
         protected virtual DbSet<TEntity> EntitySet
         {
-            get { return DbContext.Set<TEntity>(); }
+            get { return ApplicationDBContext.Set<TEntity>(); }
         }
 
         public TEntity GetById(TKey id)
@@ -59,7 +60,7 @@ namespace Cargos.Infrastructure.Base
                 throw new ArgumentNullException();
 
             EntitySet.Add(entity);
-            DbContext.SaveChanges();
+            ApplicationDBContext.SaveChanges();
             return entity;
         }
 
@@ -69,8 +70,8 @@ namespace Cargos.Infrastructure.Base
                 throw new ArgumentNullException();
 
             EntitySet.Attach(entity);
-            DbContext.Entry(entity).State = EntityState.Modified;
-            DbContext.SaveChanges();
+            ApplicationDBContext.Entry(entity).State = EntityState.Modified;
+            ApplicationDBContext.SaveChanges();
 
             return entity;
         }

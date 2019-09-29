@@ -25,16 +25,16 @@ namespace Cargos
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // config context bd
-            services.AddDbContext<CargosDBContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
+            services.AddDbContext<ApplicationDBContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
 
             // IoC repositories
-            services.AddSingleton<ICargoRepository, CargoRepository>();
-            services.AddSingleton<IFacturaRepository, FacturaRepository>();
-            services.AddSingleton<IEventoRepository, EventoRepository>();
+            services.AddTransient<ICargoRepository, CargoRepository>();
+            services.AddTransient<IFacturaRepository, FacturaRepository>();
+            services.AddTransient<IEventoRepository, EventoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, CargosDBContext cargosDBContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDBContext applicationDBContext)
         {
             if (env.IsDevelopment())
             {
@@ -47,7 +47,7 @@ namespace Cargos
             }
 
             app.UseHttpsRedirection();
-            cargosDBContext.Database.EnsureCreated();
+            applicationDBContext.Database.EnsureCreated();
             app.UseMvc();
         }
     }
