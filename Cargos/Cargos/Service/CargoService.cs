@@ -3,6 +3,7 @@ using Cargos.Domain;
 using Cargos.Infrastructure.Interface;
 using FluentValidation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cargos.API.Service
@@ -25,6 +26,23 @@ namespace Cargos.API.Service
             EventoRepository = eventoRepository;
 
             EventoInputDataContractValidator = eventoInputDataContractValidator;
+        }
+
+        public bool CheckEvento(EventoInputDataContract input)
+        {
+            return this.EventoInputDataContractValidator.Validate(input).IsValid;
+        }
+
+        public IList<string> GetErrorsCheckEvento(EventoInputDataContract input)
+        {
+            IList<string> errors = new List<string>();
+
+            var validationResult = this.EventoInputDataContractValidator.Validate(input);
+
+            foreach (var error in validationResult.Errors)
+                errors.Add(error.ToString());
+
+            return errors;
         }
 
         public void CreateEvento(EventoInputDataContract input)

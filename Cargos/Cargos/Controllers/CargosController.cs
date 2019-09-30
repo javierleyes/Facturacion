@@ -30,19 +30,12 @@ namespace Cargos.API.Controllers
         [HttpPost]
         public IActionResult Post(EventoInputDataContract input)
         {
-            //var validationResult = EventoInputDataContractValidator.Validate(input);
+            if (!this.CargoService.CheckEvento(input))
+            {
+                var errors = this.CargoService.GetErrorsCheckEvento(input);
+                return BadRequest(errors);
+            }
 
-            //if (!validationResult.IsValid)
-            //{
-            //    IList<string> errores = new List<string>();
-
-            //    foreach (var error in validationResult.Errors)
-            //        errores.Add(error.ToString());
-
-            //    return BadRequest(errores);
-            //}
-
-            //Domain.Evento evento = CreateEvento(input);
             this.CargoService.CreateEvento(input);
 
             return StatusCode(StatusCodes.Status201Created);
