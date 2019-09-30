@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cargos.API.DataContract;
 using Cargos.Infraesctructure;
 using Cargos.Infrastructure.Interface;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,15 @@ namespace Cargos.API.Controllers
         private IFacturaRepository FacturaRepository { get; set; }
         private IEventoRepository EventoRepository { get; set; }
 
-        public CargosController(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository)
+        //private IValidator<EventoInputDataContract> EventoInputDataContractValidator { get; set; }
+
+        public CargosController(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository/*, IValidator<EventoInputDataContract> eventoInputDataContractValidator*/)
         {
             CargoRepository = cargoRepository;
             FacturaRepository = facturaRepository;
             EventoRepository = eventoRepository;
+
+            //EventoInputDataContractValidator = eventoInputDataContractValidator;
         }
 
         [HttpGet("{id}", Name = "Get")]
@@ -41,8 +46,19 @@ namespace Cargos.API.Controllers
         [HttpPost]
         public IActionResult Post(EventoInputDataContract input)
         {
-            //if (!ModelState.IsValid)
-            //    return BadRequest();
+            //var validationResult = EventoInputDataContractValidator.Validate(input);
+
+            //if (!validationResult.IsValid)
+            //{
+            //    IList<string> errores = new List<string>();
+
+            //    foreach (var error in validationResult.Errors)
+            //    {
+            //        errores.Add(error.ToString());
+            //    }
+
+            //    return BadRequest(errores);
+            //}
 
             Domain.Evento evento = new Domain.Evento()
             {

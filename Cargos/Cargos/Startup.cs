@@ -1,6 +1,10 @@
-﻿using Cargos.Infraesctructure;
+﻿using Cargos.API.DataContract;
+using Cargos.API.Validator;
+using Cargos.Infraesctructure;
 using Cargos.Infrastructure.Implement;
 using Cargos.Infrastructure.Interface;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -22,15 +26,18 @@ namespace Cargos
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
 
-            // config context bd
+            // IoC context 
             services.AddDbContext<CargosDBContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
 
             // IoC repositories
             services.AddSingleton<ICargoRepository, CargoRepository>();
             services.AddSingleton<IFacturaRepository, FacturaRepository>();
             services.AddSingleton<IEventoRepository, EventoRepository>();
+
+            // IoC Validators
+            //services.AddSingleton<IValidator<EventoInputDataContract>, EventoInputDataContractValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
