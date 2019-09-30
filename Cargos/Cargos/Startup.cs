@@ -1,4 +1,5 @@
 ﻿using Cargos.API.DataContract;
+using Cargos.API.Service;
 using Cargos.API.Validator;
 using Cargos.Infraesctructure;
 using Cargos.Infrastructure.Implement;
@@ -28,7 +29,7 @@ namespace Cargos
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
 
-            // IoC context 
+            // IoC Context 
             services.AddDbContext<ApplicationDBContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
 
             // IoC repositories
@@ -38,6 +39,9 @@ namespace Cargos
 
             // IoC Validators
             services.AddSingleton<IValidator<EventoInputDataContract>, EventoInputDataContractValidator>();
+
+            // IoC Services
+            services.AddTransient<ICargoService, CargoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
