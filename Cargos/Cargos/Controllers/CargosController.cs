@@ -19,15 +19,15 @@ namespace Cargos.API.Controllers
         private IFacturaRepository FacturaRepository { get; set; }
         private IEventoRepository EventoRepository { get; set; }
 
-        //private IValidator<EventoInputDataContract> EventoInputDataContractValidator { get; set; }
+        private IValidator<EventoInputDataContract> EventoInputDataContractValidator { get; set; }
 
-        public CargosController(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository/*, IValidator<EventoInputDataContract> eventoInputDataContractValidator*/)
+        public CargosController(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository, IValidator<EventoInputDataContract> eventoInputDataContractValidator)
         {
             CargoRepository = cargoRepository;
             FacturaRepository = facturaRepository;
             EventoRepository = eventoRepository;
 
-            //EventoInputDataContractValidator = eventoInputDataContractValidator;
+            EventoInputDataContractValidator = eventoInputDataContractValidator;
         }
 
         [HttpGet("{id}", Name = "Get")]
@@ -46,36 +46,46 @@ namespace Cargos.API.Controllers
         [HttpPost]
         public IActionResult Post(EventoInputDataContract input)
         {
-            //var validationResult = EventoInputDataContractValidator.Validate(input);
+            var validationResult = EventoInputDataContractValidator.Validate(input);
 
-            //if (!validationResult.IsValid)
-            //{
-            //    IList<string> errores = new List<string>();
-
-            //    foreach (var error in validationResult.Errors)
-            //    {
-            //        errores.Add(error.ToString());
-            //    }
-
-            //    return BadRequest(errores);
-            //}
-
-            Domain.Evento evento = new Domain.Evento()
+            if (!validationResult.IsValid)
             {
-                Amount = input.Amount,
-                Date = input.Date,
-                User_Id = input.User_id,
+                IList<string> errores = new List<string>();
 
-                // cambiar por descripcion
-                Type = Domain.TypeEvento.Clasificado,
-                Currency = Domain.Currency.Dolar,
-            };
+                foreach (var error in validationResult.Errors)
+                {
+                    errores.Add(error.ToString());
+                }
+
+                return BadRequest(errores);
+            }
+
+            Domain.Evento evento = CreateEvento(input);
 
             CheckBillCurrentPeriod(evento);
 
             CreateCargo(evento);
 
             return StatusCode(StatusCodes.Status201Created);
+        }
+
+        private Domain.Evento CreateEvento(EventoInputDataContract input)
+        {
+            Domain.Evento evento = new Domain.Evento()
+            {
+                Amount = input.Amount,
+                Date = input.Date,
+                User_Id = input.User_id,
+                Event_Id = input.Event_id,
+
+                // cambiar por descripcion
+                Type = Domain.TypeEvento.Clasificado,
+                Currency = Domain.Currency.Dolar,
+            };
+
+            EventoRepository.Save(evento);
+
+            return evento;
         }
 
         private void CheckBillCurrentPeriod(Domain.Evento evento)
@@ -95,7 +105,7 @@ namespace Cargos.API.Controllers
                 Year = evento.Date.Year,
             };
 
-            this.FacturaRepository.Update(bill);
+            this.FacturaRepository.Save(bill);
         }
 
         private void CreateCargo(Domain.Evento evento)

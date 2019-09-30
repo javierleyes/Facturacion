@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cargos.Infraesctructure
 {
-    public class CargosDBContext : DbContext
+    public class ApplicationDBContext : DbContext
     {
         /*
          * En EF Core debe existir el constructor sin parametros
@@ -14,7 +14,7 @@ namespace Cargos.Infraesctructure
          * Drop-Database
          */
 
-        public CargosDBContext(DbContextOptions<CargosDBContext> options) : base(options)
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         { }
 
         public DbSet<Cargo> Cargos { get; set; }
