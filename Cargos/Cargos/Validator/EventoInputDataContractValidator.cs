@@ -18,7 +18,7 @@ namespace Cargos.API.Validator
             RuleFor(x => x.Currency).Must(ValidateCurrency)
                 .WithMessage("Los valores válidos para Currency son: USD o ARS");
 
-            RuleFor(x => x.User_id).NotEmpty().GreaterThan(0)
+            RuleFor(x => x.User_id).GreaterThan(0)
                 .WithMessage("El id del usuario debe ser mayor a 0");
 
             RuleFor(x => x.Event_type).Must(ValidateEventType)

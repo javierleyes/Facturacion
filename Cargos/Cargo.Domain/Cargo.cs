@@ -26,9 +26,10 @@ namespace Cargos.Domain
 
     public enum TypeCargo
     {
-        MarketPlace = 1,
-        Servicios = 2,
-        Externo = 3,
+        INDEFINIDO = 0,
+        MARKETPLACE = 1,
+        SERVICIOS = 2,
+        EXTERNO = 3,
     }
 
     public enum StateCargo

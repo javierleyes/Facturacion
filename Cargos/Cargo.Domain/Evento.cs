@@ -27,19 +27,19 @@ namespace Cargos.Domain
 
     public enum Currency
     {
-        Peso = 1,
-        Dolar = 2,
+        ARS = 1,
+        USD = 2,
     }
 
     public enum TypeEvento
     {
-        Clasificado = 1,
-        Venta = 2,
-        Publicidad = 3,
-        Envio = 4,
-        Credito = 5,
-        MercadoPago = 6,
-        MercadoShop = 7,
-        Fidelidad = 8,
+        CLASIFICADO = 1,
+        VENTA = 2,
+        PUBLICIDAD = 3,
+        ENVIO = 4,
+        CREDITO = 5,
+        MERCADOPAGO = 6,
+        MERCADOSHOP = 7,
+        FIDELIDAD = 8,
     }
 }

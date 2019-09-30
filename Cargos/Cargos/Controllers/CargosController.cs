@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cargos.API.DataContract;
-using Cargos.Infraesctructure;
+﻿using Cargos.API.DataContract;
 using Cargos.Infrastructure.Interface;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cargos.API.Controllers
 {
@@ -21,6 +19,9 @@ namespace Cargos.API.Controllers
 
         private IValidator<EventoInputDataContract> EventoInputDataContractValidator { get; set; }
 
+        // (1) Consideracion: se contara con un servicio que se encargara de devolver el factor de conversion a ARS.
+        private const decimal CONVERSION_FACTOR = 60;
+
         public CargosController(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository, IValidator<EventoInputDataContract> eventoInputDataContractValidator)
         {
             CargoRepository = cargoRepository;
@@ -33,8 +34,6 @@ namespace Cargos.API.Controllers
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(long id)
         {
-            //var cargo = new CargoOutputDataContract() { Amount = 105, Balance = 5, State = "Pagado", Type = "Services", User_Id = 1 };
-
             var cargo = this.CargoRepository.GetById(id);
 
             if (cargo != null)
@@ -53,9 +52,7 @@ namespace Cargos.API.Controllers
                 IList<string> errores = new List<string>();
 
                 foreach (var error in validationResult.Errors)
-                {
                     errores.Add(error.ToString());
-                }
 
                 return BadRequest(errores);
             }
@@ -77,10 +74,8 @@ namespace Cargos.API.Controllers
                 Date = input.Date,
                 User_Id = input.User_id,
                 Event_Id = input.Event_id,
-
-                // cambiar por descripcion
-                Type = Domain.TypeEvento.Clasificado,
-                Currency = Domain.Currency.Dolar,
+                Currency = (Domain.Currency)Enum.Parse(typeof(Domain.Currency), input.Currency),
+                Type = (Domain.TypeEvento)Enum.Parse(typeof(Domain.TypeEvento), input.Event_type),
             };
 
             EventoRepository.Save(evento);
@@ -110,18 +105,25 @@ namespace Cargos.API.Controllers
 
         private void CreateCargo(Domain.Evento evento)
         {
+            decimal conversionFactor = 1;
+            decimal amount;
+
             Domain.Factura bill = GetBillByPeriodAndUser(evento);
+
+            // (1) Consideracion: se contara con un servicio que se encargara de devolver el factor de conversion a ARS.
+            if (evento.Currency != Domain.Currency.ARS)
+                conversionFactor = CONVERSION_FACTOR;
+
+            amount = evento.Amount * conversionFactor;
 
             Domain.Cargo cargo = new Domain.Cargo()
             {
-                Amount = evento.Amount,
-                Balance = evento.Amount,
+                Amount = amount,
+                Balance = amount,
                 Event = evento,
                 State = Domain.StateCargo.Deuda,
                 User_Id = evento.User_Id,
-
-                // cambiar por descripcion
-                Type = Domain.TypeCargo.Servicios,
+                Type = this.GetTypeCargoByEventType(evento),
             };
 
             this.CargoRepository.Save(cargo);
@@ -129,6 +131,29 @@ namespace Cargos.API.Controllers
             bill.Cargos.Add(cargo);
 
             this.FacturaRepository.Update(bill);
+        }
+
+        private Domain.TypeCargo GetTypeCargoByEventType(Domain.Evento evento)
+        {
+            switch (evento.Type)
+            {
+                case Domain.TypeEvento.CLASIFICADO:
+                case Domain.TypeEvento.VENTA:
+                case Domain.TypeEvento.ENVIO:
+                    return Domain.TypeCargo.MARKETPLACE;
+
+                case Domain.TypeEvento.CREDITO:
+                case Domain.TypeEvento.FIDELIDAD:
+                case Domain.TypeEvento.PUBLICIDAD:
+                    return Domain.TypeCargo.SERVICIOS;
+
+                case Domain.TypeEvento.MERCADOPAGO:
+                case Domain.TypeEvento.MERCADOSHOP:
+                    return Domain.TypeCargo.EXTERNO;
+
+                default:
+                    return Domain.TypeCargo.INDEFINIDO;
+            }
         }
 
         private Domain.Factura GetBillByPeriodAndUser(Domain.Evento evento)
