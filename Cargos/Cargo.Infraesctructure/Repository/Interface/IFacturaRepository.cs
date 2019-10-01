@@ -1,7 +1,7 @@
 ﻿using Cargos.Domain;
 using Cargos.Infrastructure.Base;
 
-namespace Cargos.Infrastructure.Interface
+namespace Cargos.Infrastructure.Repository
 {
     public interface IFacturaRepository : IBaseRepository<Factura>
     {

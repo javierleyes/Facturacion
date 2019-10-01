@@ -1,9 +1,8 @@
 ﻿using Cargos.Domain;
 using Cargos.Infraesctructure;
 using Cargos.Infrastructure.Base;
-using Cargos.Infrastructure.Interface;
 
-namespace Cargos.Infrastructure.Implement
+namespace Cargos.Infrastructure.Repository
 {
     public class EventoRepository : BaseRepository<Evento>, IEventoRepository
     {

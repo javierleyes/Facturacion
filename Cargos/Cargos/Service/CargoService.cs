@@ -1,6 +1,6 @@
 ﻿using Cargos.API.DataContract;
 using Cargos.Domain;
-using Cargos.Infrastructure.Interface;
+using Cargos.Infrastructure.Repository;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -21,11 +21,11 @@ namespace Cargos.API.Service
 
         public CargoService(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository, IValidator<EventoInputDataContract> eventoInputDataContractValidator)
         {
-            CargoRepository = cargoRepository;
-            FacturaRepository = facturaRepository;
-            EventoRepository = eventoRepository;
+            this.CargoRepository = cargoRepository;
+            this.FacturaRepository = facturaRepository;
+            this.EventoRepository = eventoRepository;
 
-            EventoInputDataContractValidator = eventoInputDataContractValidator;
+            this.EventoInputDataContractValidator = eventoInputDataContractValidator;
         }
 
         #region POST

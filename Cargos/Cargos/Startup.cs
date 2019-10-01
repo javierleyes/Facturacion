@@ -2,10 +2,8 @@
 using Cargos.API.Service;
 using Cargos.API.Validator;
 using Cargos.Infraesctructure;
-using Cargos.Infrastructure.Implement;
-using Cargos.Infrastructure.Interface;
+using Cargos.Infrastructure.Repository;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
