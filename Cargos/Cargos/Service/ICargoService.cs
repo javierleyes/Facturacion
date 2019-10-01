@@ -5,14 +5,15 @@ namespace Cargos.API.Service
 {
     public interface ICargoService
     {
-        // POST
+        #region POST
         bool CheckEvento(EventoInputDataContract input);
         IList<string> GetErrorsCheckEvento(EventoInputDataContract input);
         void CreateEvento(EventoInputDataContract input);
+        #endregion
 
-        // GET
+        #region GET
         CargoOutputDataContract GetCargoById(long id);
-
         FacturaOutputDataContract GetFacturaById(long id);
+        #endregion
     }
 }

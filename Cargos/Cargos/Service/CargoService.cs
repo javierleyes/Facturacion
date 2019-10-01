@@ -91,7 +91,7 @@ namespace Cargos.API.Service
         private void CreateCargo(Evento evento)
         {
             decimal conversionFactor = 1;
-            decimal amount;
+            decimal amountLegal;
 
             Factura bill = GetBillByPeriodAndUser(evento);
 
@@ -99,12 +99,12 @@ namespace Cargos.API.Service
             if (evento.Currency != Currency.ARS)
                 conversionFactor = CONVERSION_FACTOR;
 
-            amount = evento.Amount * conversionFactor;
+            amountLegal = evento.Amount * conversionFactor;
 
             Cargo cargo = new Cargo()
             {
-                Amount = amount,
-                Balance = amount,
+                Amount = amountLegal,
+                Balance = amountLegal,
                 Event = evento,
                 State = StateCargo.Deuda,
                 User_Id = evento.User_Id,
