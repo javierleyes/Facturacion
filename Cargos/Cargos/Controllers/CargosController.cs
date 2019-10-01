@@ -1,6 +1,5 @@
 ﻿using Cargos.API.DataContract;
 using Cargos.API.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cargos.API.Controllers
@@ -42,7 +41,7 @@ namespace Cargos.API.Controllers
             var cargo = this.CargoService.GetCargoById(id);
 
             if (cargo == null)
-                return StatusCode(StatusCodes.Status404NotFound);
+                return NotFound($"No se encontro el cargo con id: {id}");
 
             return Ok(cargo);
         }
@@ -53,7 +52,7 @@ namespace Cargos.API.Controllers
             var factura = this.CargoService.GetFacturaById(id);
 
             if (factura == null)
-                return StatusCode(StatusCodes.Status404NotFound);
+                return NotFound($"No se encontro la factura con id: {id}");
 
             return Ok(factura);
         }

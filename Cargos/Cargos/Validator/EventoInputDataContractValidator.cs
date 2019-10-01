@@ -9,9 +9,6 @@ namespace Cargos.API.Validator
     {
         public EventoInputDataContractValidator()
         {
-            RuleFor(x => x.Event_id).NotEmpty().GreaterThan(0)
-                .WithMessage("El id del evento debe ser mayor a 0");
-
             RuleFor(x => x.Amount).GreaterThan(0).Must(ValidateAmount)
                 .WithMessage("El monto debe ser mayor a 0 y con 2 decimales");
 

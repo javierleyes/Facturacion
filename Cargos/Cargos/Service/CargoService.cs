@@ -54,7 +54,6 @@ namespace Cargos.API.Service
                 Amount = input.Amount,
                 Date = input.Date,
                 User_Id = input.User_id,
-                Event_Id = input.Event_id,
                 Currency = (Currency)Enum.Parse(typeof(Currency), input.Currency),
                 Type = (TypeEvento)Enum.Parse(typeof(TypeEvento), input.Event_type),
             };
@@ -120,26 +119,26 @@ namespace Cargos.API.Service
             return cargo.Id;
         }
 
-        private Domain.TypeCargo GetTypeCargoByEventType(Domain.Evento evento)
+        private TypeCargo GetTypeCargoByEventType(Evento evento)
         {
             switch (evento.Type)
             {
-                case Domain.TypeEvento.CLASIFICADO:
-                case Domain.TypeEvento.VENTA:
-                case Domain.TypeEvento.ENVIO:
-                    return Domain.TypeCargo.MARKETPLACE;
+                case TypeEvento.CLASIFICADO:
+                case TypeEvento.VENTA:
+                case TypeEvento.ENVIO:
+                    return TypeCargo.MARKETPLACE;
 
-                case Domain.TypeEvento.CREDITO:
-                case Domain.TypeEvento.FIDELIDAD:
-                case Domain.TypeEvento.PUBLICIDAD:
-                    return Domain.TypeCargo.SERVICIOS;
+                case TypeEvento.CREDITO:
+                case TypeEvento.FIDELIDAD:
+                case TypeEvento.PUBLICIDAD:
+                    return TypeCargo.SERVICIOS;
 
-                case Domain.TypeEvento.MERCADOPAGO:
-                case Domain.TypeEvento.MERCADOSHOP:
-                    return Domain.TypeCargo.EXTERNO;
+                case TypeEvento.MERCADOPAGO:
+                case TypeEvento.MERCADOSHOP:
+                    return TypeCargo.EXTERNO;
 
                 default:
-                    return Domain.TypeCargo.INDEFINIDO;
+                    return TypeCargo.INDEFINIDO;
             }
         }
 

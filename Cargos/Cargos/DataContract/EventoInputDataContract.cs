@@ -4,7 +4,6 @@ namespace Cargos.API.DataContract
 {
     public class EventoInputDataContract
     {
-        public long Event_id { get; set; }
         public decimal Amount { get; set; }
         public string Currency { get; set; }
         public long User_id { get; set; }
