@@ -150,7 +150,7 @@ namespace Cargos.API.Service
 
         #region GET
 
-        public CargoOutputDataContract GetById(long id)
+        public CargoOutputDataContract GetCargoById(long id)
         {
             Cargo cargo = this.CargoRepository.GetById(id);
 
@@ -164,6 +164,21 @@ namespace Cargos.API.Service
                 State = cargo.State.ToString(),
                 Type = cargo.Type.ToString(),
                 User_Id = cargo.User_Id,
+            };
+        }
+
+        public FacturaOutputDataContract GetFacturaById(long id)
+        {
+            Factura factura = this.FacturaRepository.GetById(id);
+
+            if (factura == null)
+                return null;
+
+            return new FacturaOutputDataContract()
+            {
+                User_Id = factura.User_Id,
+                Month = factura.Month,
+                Year = factura.Year,
             };
         }
 

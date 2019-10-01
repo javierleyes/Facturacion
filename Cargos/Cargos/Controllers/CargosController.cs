@@ -36,15 +36,26 @@ namespace Cargos.API.Controllers
 
         #region GET
 
-        [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(long id)
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetCargoById(long id)
         {
-            var cargo = this.CargoService.GetById(id);
+            var cargo = this.CargoService.GetCargoById(id);
 
             if (cargo == null)
                 return StatusCode(StatusCodes.Status404NotFound);
 
             return Ok(cargo);
+        }
+
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetFacturaById(long id)
+        {
+            var factura = this.CargoService.GetFacturaById(id);
+
+            if (factura == null)
+                return StatusCode(StatusCodes.Status404NotFound);
+
+            return Ok(factura);
         }
 
         #endregion

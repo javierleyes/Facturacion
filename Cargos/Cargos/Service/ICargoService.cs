@@ -11,6 +11,8 @@ namespace Cargos.API.Service
         void CreateEvento(EventoInputDataContract input);
 
         // GET
-        CargoOutputDataContract GetById(long id);
+        CargoOutputDataContract GetCargoById(long id);
+
+        FacturaOutputDataContract GetFacturaById(long id);
     }
 }
