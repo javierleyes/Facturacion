@@ -28,6 +28,8 @@ namespace Cargos.API.Service
             EventoInputDataContractValidator = eventoInputDataContractValidator;
         }
 
+        #region POST
+
         public bool CheckEvento(EventoInputDataContract input)
         {
             return this.EventoInputDataContractValidator.Validate(input).IsValid;
@@ -143,5 +145,28 @@ namespace Cargos.API.Service
         {
             return this.FacturaRepository.GetAll().SingleOrDefault(x => x.Month == evento.Date.Month && x.Year == evento.Date.Year && x.User_Id == evento.User_Id);
         }
+
+        #endregion
+
+        #region GET
+
+        public CargoOutputDataContract GetById(long id)
+        {
+            Cargo cargo = this.CargoRepository.GetById(id);
+
+            if (cargo == null)
+                return null;
+
+            return new CargoOutputDataContract()
+            {
+                Amount = cargo.Amount,
+                Balance = cargo.Balance,
+                State = cargo.State.ToString(),
+                Type = cargo.Type.ToString(),
+                User_Id = cargo.User_Id,
+            };
+        }
+
+        #endregion
     }
 }

@@ -16,16 +16,7 @@ namespace Cargos.API.Controllers
             this.CargoService = cargoService;
         }
 
-        //[HttpGet("{id}", Name = "Get")]
-        //public IActionResult Get(long id)
-        //{
-        //    var cargo = this.CargoRepository.GetById(id);
-
-        //    if (cargo != null)
-        //        return Ok(cargo);
-
-        //    return StatusCode(StatusCodes.Status404NotFound);
-        //}
+        #region POST
 
         [HttpPost]
         public IActionResult Post(EventoInputDataContract input)
@@ -40,5 +31,22 @@ namespace Cargos.API.Controllers
 
             return StatusCode(StatusCodes.Status201Created);
         }
+
+        #endregion
+
+        #region GET
+
+        [HttpGet("{id}", Name = "Get")]
+        public IActionResult Get(long id)
+        {
+            var cargo = this.CargoService.GetById(id);
+
+            if (cargo == null)
+                return StatusCode(StatusCodes.Status404NotFound);
+
+            return Ok(cargo);
+        }
+
+        #endregion
     }
 }
