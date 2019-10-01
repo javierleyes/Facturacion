@@ -104,7 +104,7 @@ namespace Cargos.API.Service
             {
                 Amount = amountLegal,
                 Balance = amountLegal,
-                Event = evento,
+                Evento = evento,
                 State = StateCargo.Deuda,
                 User_Id = evento.User_Id,
                 Type = this.GetTypeCargoByEventType(evento),
@@ -171,16 +171,17 @@ namespace Cargos.API.Service
 
         public FacturaOutputDataContract GetFacturaById(long id)
         {
-            Factura factura = this.FacturaRepository.GetById(id);
+            Factura bill = this.FacturaRepository.GetById(id);
 
-            if (factura == null)
+            if (bill == null)
                 return null;
 
             return new FacturaOutputDataContract()
             {
-                User_Id = factura.User_Id,
-                Month = factura.Month,
-                Year = factura.Year,
+                User_Id = bill.User_Id,
+                Month = bill.Month,
+                Year = bill.Year,
+                Cargos = bill.Cargos.Select(x => x.Id).ToList(),
             };
         }
 

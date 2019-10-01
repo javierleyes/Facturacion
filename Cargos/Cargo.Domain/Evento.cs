@@ -1,14 +1,13 @@
 ﻿using Cargos.Domain.Base;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cargos.Domain
 {
+    [Table("Evento", Schema = "dbo")]
     public class Evento : Domain<long>
     {
-        [Required]
-        public long Event_Id { get; set; }
-
         [Required]
         public long User_Id { get; set; }
 
@@ -16,6 +15,7 @@ namespace Cargos.Domain
         public Currency Currency { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
 
         [Required]
@@ -23,6 +23,11 @@ namespace Cargos.Domain
 
         [Required]
         public TypeEvento Type { get; set; }
+
+        public Evento()
+        {
+
+        }
     }
 
     public enum Currency

@@ -1,13 +1,16 @@
 ﻿using Cargos.Domain.Base;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cargos.Domain
 {
+    [Table("Factura", Schema = "dbo")]
     public class Factura : Domain<long>
     {
         [Required]
         public long User_Id { get; set; }
+
         public IList<Cargo> Cargos { get; set; }
 
         [Required]
