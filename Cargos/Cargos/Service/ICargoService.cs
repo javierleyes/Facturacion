@@ -8,7 +8,7 @@ namespace Cargos.API.Service
         #region POST
         bool CheckEvento(EventoInputDataContract input);
         IList<string> GetErrorsCheckEvento(EventoInputDataContract input);
-        void CreateEvento(EventoInputDataContract input);
+        CargoOutputDataContract CreateEvento(EventoInputDataContract input);
         #endregion
 
         #region GET

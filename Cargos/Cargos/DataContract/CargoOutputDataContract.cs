@@ -2,6 +2,7 @@
 {
     public class CargoOutputDataContract
     {
+        public long Id { get; set; }
         public long User_Id { get; set; }
         public decimal Amount { get; set; }
         public decimal Balance { get; set; }

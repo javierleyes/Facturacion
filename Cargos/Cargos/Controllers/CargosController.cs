@@ -27,9 +27,9 @@ namespace Cargos.API.Controllers
                 return BadRequest(errors);
             }
 
-            this.CargoService.CreateEvento(input);
+            var cargo = this.CargoService.CreateEvento(input);
 
-            return StatusCode(StatusCodes.Status201Created);
+            return CreatedAtAction(nameof(this.CargoService.GetCargoById), new { id = cargo.Id }, cargo);
         }
 
         #endregion

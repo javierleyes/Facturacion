@@ -47,7 +47,7 @@ namespace Cargos.API.Service
             return errors;
         }
 
-        public void CreateEvento(EventoInputDataContract input)
+        public CargoOutputDataContract CreateEvento(EventoInputDataContract input)
         {
             Evento evento = new Evento()
             {
@@ -63,9 +63,9 @@ namespace Cargos.API.Service
 
             this.CheckBillCurrentPeriod(evento);
 
-            this.CreateCargo(evento);
+            long idCargo = this.CreateCargo(evento);
 
-            //return evento;
+            return this.GetCargoById(idCargo);
         }
 
         private void CheckBillCurrentPeriod(Evento evento)
@@ -88,7 +88,7 @@ namespace Cargos.API.Service
             this.FacturaRepository.Save(bill);
         }
 
-        private void CreateCargo(Evento evento)
+        private long CreateCargo(Evento evento)
         {
             decimal conversionFactor = 1;
             decimal amountLegal;
@@ -116,6 +116,8 @@ namespace Cargos.API.Service
             bill.Cargos.Add(cargo);
 
             this.FacturaRepository.Update(bill);
+
+            return cargo.Id;
         }
 
         private Domain.TypeCargo GetTypeCargoByEventType(Domain.Evento evento)
@@ -159,6 +161,7 @@ namespace Cargos.API.Service
 
             return new CargoOutputDataContract()
             {
+                Id = cargo.Id,
                 Amount = cargo.Amount,
                 Balance = cargo.Balance,
                 State = cargo.State.ToString(),
