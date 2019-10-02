@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pagos.Domain
 {
+    [Table("Pago", Schema = "dbo")]
     public class Pago : Domain<long>
     {
         [Required]
@@ -14,13 +15,19 @@ namespace Pagos.Domain
         public Currency Currency { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount_Currency { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount_Legal { get; set; }
 
-        [NotMapped]
-        public IList<long> Cargo_Id { get; set; }
+        public virtual IList<Constancia> Cargos_Id { get; set; }
+
+        public Pago()
+        {
+            this.Cargos_Id = new List<Constancia>();
+        }
     }
 
     public enum Currency

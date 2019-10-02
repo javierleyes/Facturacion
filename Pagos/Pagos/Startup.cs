@@ -28,7 +28,7 @@ namespace Pagos
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // IoC Context 
-            services.AddDbContext<ApplicationDBContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
+            services.AddDbContext<ApplicationDBContext>(option => option.UseLazyLoadingProxies().UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
 
             // IoC repositories
             services.AddTransient<IPagoRepository, PagoRepository>();
@@ -41,7 +41,7 @@ namespace Pagos
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDBContext applicationDBContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -54,7 +54,6 @@ namespace Pagos
             }
 
             app.UseHttpsRedirection();
-            applicationDBContext.Database.EnsureCreated();
             app.UseMvc();
         }
     }
