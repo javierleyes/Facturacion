@@ -89,21 +89,14 @@ namespace Cargos.API.Service
 
         private long CreateCargo(Evento evento)
         {
-            decimal conversionFactor = 1;
-            decimal amountLegal;
-
             Factura bill = GetBillByPeriodAndUser(evento);
 
-            // (1) Consideracion: se contara con un servicio que se encargara de devolver el factor de conversion a ARS.
-            if (evento.Currency != Currency.ARS)
-                conversionFactor = CONVERSION_FACTOR;
-
-            amountLegal = evento.Amount * conversionFactor;
+            decimal payment_Amount = GetLegalAmount(evento.Currency.ToString(), evento.Amount);
 
             Cargo cargo = new Cargo()
             {
-                Amount = amountLegal,
-                Balance = amountLegal,
+                Amount = payment_Amount,
+                Balance = payment_Amount,
                 Evento = evento,
                 State = StateCargo.Deuda,
                 User_Id = evento.User_Id,
@@ -147,6 +140,13 @@ namespace Cargos.API.Service
             return this.FacturaRepository.GetAll().SingleOrDefault(x => x.Month == evento.Date.Month && x.Year == evento.Date.Year && x.User_Id == evento.User_Id);
         }
 
+        private decimal GetLegalAmount(string currency, decimal amount_currency)
+        {
+            if ((Currency)Enum.Parse(typeof(Currency), currency) != Currency.ARS)
+                return amount_currency * CONVERSION_FACTOR;
+
+            return amount_currency;
+        }
         #endregion
 
         #region GET

@@ -1,5 +1,6 @@
 ﻿using Cargos.API.DataContract;
 using Cargos.API.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cargos.API.Controllers
@@ -28,7 +29,7 @@ namespace Cargos.API.Controllers
 
             var cargo = this.CargoService.CreateEvento(input);
 
-            return CreatedAtAction(nameof(this.CargoService.GetCargoById), new { id = cargo.Cargo_Id }, cargo);
+            return StatusCode(StatusCodes.Status201Created, cargo);
         }
 
         #endregion
