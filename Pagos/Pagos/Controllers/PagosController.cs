@@ -25,38 +25,44 @@ namespace Pagos.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(PagoInputDataContract input)
         {
-            string uriCargos = "https://localhost:44311/";
+            if (!this.PagoService.CheckInput(input))
+            {
+                var errors = this.PagoService.GetErrorsCheckPago(input);
+                return BadRequest(errors);
+            }
+                                 
+
+
+
+            string uri = "https://localhost:44311/";
+
+            string action = "api/Cargos/GetDebtByUser/";
+            string id = input.User_id.ToString();
+
+            DebtInputDataContract debt = new DebtInputDataContract();
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(uriCargos);
+                client.BaseAddress = new Uri(uri);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/Cargos/GetDebtByUser/51");
+                HttpResponseMessage response = await client.GetAsync($"{action}{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var entity_Response = response.Content.ReadAsStringAsync().Result;
 
-                    DebtInputDataContract debt = JsonConvert.DeserializeObject<DebtInputDataContract>(entity_Response);
+                    debt = JsonConvert.DeserializeObject<DebtInputDataContract>(entity_Response);
                 }
             }
 
 
 
+            if (!this.PagoService.CheckAmountDebt(input, debt))
+                return BadRequest("El monto del pago es superior al monto de la deuda.");
 
-
-
-
-
-                if (!this.PagoService.CheckPago(input))
-                {
-                    var errors = this.PagoService.GetErrorsCheckPago(input);
-                    return BadRequest(errors);
-                }
-
-            var pago = this.PagoService.CreatePago(input);
+            var pago = this.PagoService.CreatePago(input, debt);
 
             return CreatedAtAction(nameof(this.PagoService.GetPagoById), new { id = pago.Pago_Id }, pago);
         }

@@ -6,9 +6,10 @@ namespace Pagos.API.Service
     public interface IPagoService
     {
         #region POST
-        bool CheckPago(PagoInputDataContract input);
+        bool CheckInput(PagoInputDataContract input);
+        bool CheckAmountDebt(PagoInputDataContract input, DebtInputDataContract debt);
         IList<string> GetErrorsCheckPago(PagoInputDataContract input);
-        PagoOutputDataContract CreatePago(PagoInputDataContract input);
+        PagoOutputDataContract CreatePago(PagoInputDataContract input, DebtInputDataContract debt);
         #endregion
 
         #region GET
