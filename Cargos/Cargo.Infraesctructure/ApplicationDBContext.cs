@@ -14,6 +14,9 @@ namespace Cargos.Infraesctructure
          * Drop-Database
          */
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        //    => optionsBuilder.UseLazyLoadingProxies().UseSqlServer(myConnectionString);
+
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         { }
 

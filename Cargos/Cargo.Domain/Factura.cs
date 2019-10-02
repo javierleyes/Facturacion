@@ -11,7 +11,7 @@ namespace Cargos.Domain
         [Required]
         public long User_Id { get; set; }
 
-        public IList<Cargo> Cargos { get; set; }
+        public virtual IList<Cargo> Cargos { get; set; }
 
         [Required]
         public int Month { get; set; }
