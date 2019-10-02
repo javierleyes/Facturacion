@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Pagos.API.DataContract;
 using Pagos.API.Service;
@@ -30,7 +31,7 @@ namespace Pagos.API.Controllers
                 var errors = this.PagoService.GetErrorsCheckPago(input);
                 return BadRequest(errors);
             }
-                                 
+
 
 
 
@@ -64,7 +65,7 @@ namespace Pagos.API.Controllers
 
             var pago = this.PagoService.CreatePago(input, debt);
 
-            return CreatedAtAction(nameof(this.PagoService.GetPagoById), new { id = pago.Pago_Id }, pago);
+            return StatusCode(StatusCodes.Status201Created, pago);
         }
 
         #endregion

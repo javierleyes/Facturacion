@@ -22,11 +22,11 @@ namespace Pagos.Domain
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount_Legal { get; set; }
 
-        public virtual IList<Constancia> Cargos_Id { get; set; }
+        public virtual IList<Constancia> Constancias { get; set; }
 
         public Pago()
         {
-            this.Cargos_Id = new List<Constancia>();
+            this.Constancias = new List<Constancia>();
         }
     }
 

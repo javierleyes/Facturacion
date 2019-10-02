@@ -61,9 +61,42 @@ namespace Pagos.API.Service
                 Amount_Legal = payment_Amount,
             };
 
+            AddCargo(debt, payment_Amount, pago);
+
             PagoRepository.Save(pago);
 
             return this.GetPagoById(pago.Id);
+        }
+
+        private void AddCargo(DebtInputDataContract debt, decimal payment_Amount, Pago pago)
+        {
+            foreach (var cargo in debt.Cargos)
+            {
+                if (payment_Amount == 0)
+                    break;
+
+                Constancia constancia = new Constancia()
+                {
+                    Cargo_Id = cargo.Cargo_Id,
+                };
+
+                if (payment_Amount >= cargo.Amount)
+                {
+                    constancia.Amount = cargo.Amount;
+
+                    payment_Amount -= cargo.Amount;
+                    cargo.Amount = 0;
+                }
+                else
+                {
+                    constancia.Amount = payment_Amount;
+
+                    cargo.Amount -= payment_Amount;
+                    payment_Amount = 0;
+                }
+
+                pago.Constancias.Add(constancia);
+            }
         }
 
         // (1) Consideracion: se contara con un servicio que se encargara de devolver el factor de conversion a ARS.
@@ -87,11 +120,12 @@ namespace Pagos.API.Service
 
             return new PagoOutputDataContract()
             {
+                Pago_Id = pago.Id,
                 Currency = pago.Currency.ToString(),
                 Amount_Currency = pago.Amount_Currency,
                 Amount_Legal = pago.Amount_Legal,
                 User_id = pago.User_Id,
-                Cargos_Id = pago.Cargos_Id.Select(x => x.Cargo_Id).ToList(),
+                Constancias = pago.Constancias.Select(x => new ConstanciaOutputDataContract() { Cargo_Id = x.Cargo_Id, Amount = x.Amount }).ToList(),
             };
         }
 
