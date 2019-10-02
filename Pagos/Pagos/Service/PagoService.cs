@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentValidation;
 using Pagos.API.DataContract;
 using Pagos.Domain;
@@ -41,32 +42,49 @@ namespace Pagos.API.Service
             return errors;
         }
 
-        public void CreatePago(PagoInputDataContract input)
+        public PagoOutputDataContract CreatePago(PagoInputDataContract input)
         {
-            decimal conversionFactor = 1;
-            decimal amountLegal;
+            decimal conversion_Factor = 1;
+            decimal amount_Legal;
 
             // (1) Consideracion: se contara con un servicio que se encargara de devolver el factor de conversion a ARS.
             if ((Currency)Enum.Parse(typeof(Currency), input.Currency) != Currency.ARS)
-                conversionFactor = CONVERSION_FACTOR;
+                conversion_Factor = CONVERSION_FACTOR;
 
-            amountLegal = input.Amount * conversionFactor;
+            amount_Legal = input.Amount * conversion_Factor;
 
             Pago pago = new Pago()
             {
                 User_Id = input.User_id,
                 Currency = (Currency)Enum.Parse(typeof(Currency), input.Currency),
                 Amount_Currency = input.Amount,
-                Amount_Legal = amountLegal,
+                Amount_Legal = amount_Legal,
             };
 
             PagoRepository.Save(pago);
 
-            //return evento;
+            return this.GetPagoById(pago.Id);
+        }
+
+        #region GET
+        public PagoOutputDataContract GetPagoById(long id)
+        {
+            Pago pago = this.PagoRepository.GetById(id);
+
+            if (pago == null)
+                return null;
+
+            return new PagoOutputDataContract()
+            {
+                Currency = pago.Currency.ToString(),
+                Amount_Currency = pago.Amount_Currency,
+                Amount_Legal = pago.Amount_Legal,
+                User_id = pago.User_Id,
+                Cargos_Id = pago.Cargos_Id.Select(x => x.Cargo_Id).ToList(),
+            };
         }
         #endregion
 
-        #region GET
         #endregion
     }
 }

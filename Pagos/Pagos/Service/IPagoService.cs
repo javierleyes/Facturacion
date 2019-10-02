@@ -8,7 +8,11 @@ namespace Pagos.API.Service
         #region POST
         bool CheckPago(PagoInputDataContract input);
         IList<string> GetErrorsCheckPago(PagoInputDataContract input);
-        void CreatePago(PagoInputDataContract input);
+        PagoOutputDataContract CreatePago(PagoInputDataContract input);
+        #endregion
+
+        #region GET
+        PagoOutputDataContract GetPagoById(long id);
         #endregion
     }
 }
