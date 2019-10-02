@@ -178,11 +178,40 @@ namespace Cargos.API.Service
 
             return new FacturaOutputDataContract()
             {
+                Factura_Id = bill.Id,
                 User_Id = bill.User_Id,
                 Month = bill.Month,
                 Year = bill.Year,
                 Cargos_Id = bill.Cargos.Select(x => x.Id).ToList(),
             };
+        }
+
+        public DeudaUsuarioOutputDataContract GetDeudaByUser(long id)
+        {
+            IList<Cargo> cargos = this.CargoRepository.GetAll().Where(x => x.User_Id == id && x.State == StateCargo.Deuda).ToList();
+
+            if (cargos == null)
+                return null;
+
+            DeudaUsuarioOutputDataContract debt = new DeudaUsuarioOutputDataContract();
+            debt.Amount = cargos.Sum(x => x.Balance);
+
+            foreach (Cargo cargo in cargos)
+            {
+                CargoOutputDataContract cargo_Output = new CargoOutputDataContract()
+                {
+                    Cargo_Id = cargo.Id,
+                    Amount = cargo.Amount,
+                    Balance = cargo.Balance,
+                    State = cargo.State.ToString(),
+                    Type = cargo.Type.ToString(),
+                    User_Id = cargo.User_Id,
+                };
+
+                debt.Cargos.Add(cargo_Output);
+            }
+
+            return debt;
         }
 
         #endregion
