@@ -28,7 +28,7 @@ namespace Cargos.API.Controllers
 
             var cargo = this.CargoService.CreateEvento(input);
 
-            return CreatedAtAction(nameof(this.CargoService.GetCargoById), new { id = cargo.Id }, cargo);
+            return CreatedAtAction(nameof(this.CargoService.GetCargoById), new { id = cargo.Cargo_Id }, cargo);
         }
 
         #endregion

@@ -160,7 +160,7 @@ namespace Cargos.API.Service
 
             return new CargoOutputDataContract()
             {
-                Id = cargo.Id,
+                Cargo_Id = cargo.Id,
                 Amount = cargo.Amount,
                 Balance = cargo.Balance,
                 State = cargo.State.ToString(),
@@ -181,7 +181,7 @@ namespace Cargos.API.Service
                 User_Id = bill.User_Id,
                 Month = bill.Month,
                 Year = bill.Year,
-                Cargos = bill.Cargos.Select(x => x.Id).ToList(),
+                Cargos_Id = bill.Cargos.Select(x => x.Id).ToList(),
             };
         }
 
