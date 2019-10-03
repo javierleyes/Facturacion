@@ -5,8 +5,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FluentValidation;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Pagos.API.DataContract;
+using Pagos.API.Infrastructure;
 using Pagos.Domain;
 using Pagos.Infrastructure.Repository;
 
@@ -18,14 +20,18 @@ namespace Pagos.API.Service
 
         private IValidator<PagoInputDataContract> PagoInputDataContractValidator { get; set; }
 
+        private readonly IOptions<AppSettings> AppSettings;
+
         // (1) Consideracion: se contara con un servicio que se encargara de devolver el factor de conversion a ARS.
         private const decimal CONVERSION_FACTOR = 60;
 
-        public PagoService(IPagoRepository pagoRepository, IValidator<PagoInputDataContract> pagoInputDataContractValidator)
+        public PagoService(IPagoRepository pagoRepository, IValidator<PagoInputDataContract> pagoInputDataContractValidator, IOptions<AppSettings> appSettings)
         {
             this.PagoRepository = pagoRepository;
 
             this.PagoInputDataContractValidator = pagoInputDataContractValidator;
+
+            this.AppSettings = appSettings;
         }
 
         #region POST
@@ -55,8 +61,7 @@ namespace Pagos.API.Service
 
         public async Task<DebtInputDataContract> GetDebtByUser(long user_Id)
         {
-            // parametrizar en config
-            string uri = "https://localhost:44311/";
+            string uri = this.AppSettings.Value.UrlAPICargos;
 
             string action = "api/Cargos/GetDebtByUser/";
             string id = user_Id.ToString();
@@ -141,8 +146,7 @@ namespace Pagos.API.Service
                 Payment_Debt = constancia.Amount,
             };
 
-            // parametrizar en configuraciones
-            string uri = "https://localhost:44311/";
+            string uri = this.AppSettings.Value.UrlAPICargos;
             string action = "api/Cargos";
 
             using (var client = new HttpClient())

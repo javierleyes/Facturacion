@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pagos.API.DataContract;
+using Pagos.API.Infrastructure;
 using Pagos.API.Service;
 using Pagos.API.Validator;
 using Pagos.Infrastructure;
@@ -27,16 +28,18 @@ namespace Pagos
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // IoC Context 
-            services.AddDbContext<ApplicationDBContext>(option => option.UseLazyLoadingProxies().UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            // IoC repositories
+            // IoC Context 
+            services.AddDbContext<ApplicationDBContext>(option => option.UseLazyLoadingProxies().UseSqlServer(Configuration.GetSection("AppSettings").GetSection("ConnectionString").Value));
+
+            // IoC repository
             services.AddTransient<IPagoRepository, PagoRepository>();
 
-            // IoC Validators
+            // IoC Validator
             services.AddSingleton<IValidator<PagoInputDataContract>, PagoInputDataContractValidator>();
 
-            // IoC Services
+            // IoC Service
             services.AddTransient<IPagoService, PagoService>();
         }
 

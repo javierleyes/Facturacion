@@ -28,7 +28,7 @@ namespace Cargos
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // IoC Context 
-            services.AddDbContext<ApplicationDBContext>(option => option.UseLazyLoadingProxies().UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
+            services.AddDbContext<ApplicationDBContext>(option => option.UseLazyLoadingProxies().UseSqlServer(Configuration.GetSection("AppSettings").GetSection("ConnectionString").Value));
 
             // IoC repositories
             services.AddTransient<ICargoRepository, CargoRepository>();
