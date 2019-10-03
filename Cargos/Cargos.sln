@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cargos.API", "Cargos\Cargos.API.csproj", "{7AA1C795-3030-492C-AA5E-C000160B1D17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cargos.API", "Cargos\Cargos.API.csproj", "{7AA1C795-3030-492C-AA5E-C000160B1D17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cargos.Domain", "Cargo.Domain\Cargos.Domain.csproj", "{9A80B2D0-7654-4BB3-816A-5A804FB21D6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cargos.Domain", "Cargo.Domain\Cargos.Domain.csproj", "{9A80B2D0-7654-4BB3-816A-5A804FB21D6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cargos.Infrastructure", "Cargo.Infraesctructure\Cargos.Infrastructure.csproj", "{A9D94449-6839-4F9C-8734-380344E93BA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cargos.Infrastructure", "Cargo.Infraesctructure\Cargos.Infrastructure.csproj", "{A9D94449-6839-4F9C-8734-380344E93BA5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{E2511887-D7DC-4927-81C4-1980D8B1CDAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cargo.UnitTest", "Cargo.UnitTest\Cargo.UnitTest.csproj", "{E087BD4F-3A20-49E2-8854-742F501E21F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cargos.RepositoryTest", "Cargo.UnitTest\Cargos.RepositoryTest.csproj", "{E087BD4F-3A20-49E2-8854-742F501E21F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
