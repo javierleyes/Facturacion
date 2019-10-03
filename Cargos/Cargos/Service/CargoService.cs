@@ -213,6 +213,29 @@ namespace Cargos.API.Service
 
             return debt;
         }
+        #endregion
+
+        #region PUT
+        public CargoOutputDataContract UpdateCargo(CargoUpdateDataContract cargo_Update)
+        {
+            Cargo cargo = this.CargoRepository.GetById(cargo_Update.Cargo_Id);
+            cargo.Balance -= cargo_Update.Payment_Debt;
+
+            if (cargo.Balance == 0)
+                cargo.State = StateCargo.Pagado;
+
+            this.CargoRepository.Update(cargo);
+
+            return new CargoOutputDataContract()
+            {
+                Cargo_Id = cargo.Id,
+                Amount = cargo.Amount,
+                Balance = cargo.Balance,
+                State = cargo.State.ToString(),
+                Type = cargo.Type.ToString(),
+                User_Id = cargo.User_Id,
+            };
+        }
 
         #endregion
     }

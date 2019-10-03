@@ -34,6 +34,19 @@ namespace Cargos.API.Controllers
 
         #endregion
 
+        #region PUT
+        [HttpPut]
+        public IActionResult Put(CargoUpdateDataContract cargo)
+        {
+            // validar input
+            // validar si existe el cargo id
+
+            var output = this.CargoService.UpdateCargo(cargo);
+
+            return Ok(output);
+        }
+        #endregion
+
         #region GET
 
         [HttpGet("[action]/{id}")]
