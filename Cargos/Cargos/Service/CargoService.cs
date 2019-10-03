@@ -15,22 +15,24 @@ namespace Cargos.API.Service
         private IEventoRepository EventoRepository { get; set; }
 
         private IValidator<EventoInputDataContract> EventoInputDataContractValidator { get; set; }
+        private IValidator<CargoUpdateDataContract> CargoUpdateDataContractValidator { get; set; }
 
         // (1) Consideracion: se contara con un servicio que se encargara de devolver el factor de conversion a ARS.
         private const decimal CONVERSION_FACTOR = 60;
 
-        public CargoService(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository, IValidator<EventoInputDataContract> eventoInputDataContractValidator)
+        public CargoService(ICargoRepository cargoRepository, IFacturaRepository facturaRepository, IEventoRepository eventoRepository,
+            IValidator<EventoInputDataContract> eventoInputDataContractValidator, IValidator<CargoUpdateDataContract> cargoUpdateDataContractValidator)
         {
             this.CargoRepository = cargoRepository;
             this.FacturaRepository = facturaRepository;
             this.EventoRepository = eventoRepository;
 
             this.EventoInputDataContractValidator = eventoInputDataContractValidator;
+            this.CargoUpdateDataContractValidator = cargoUpdateDataContractValidator;
         }
 
         #region POST
-
-        public bool CheckEvento(EventoInputDataContract input)
+        public bool CheckFormatEventoInput(EventoInputDataContract input)
         {
             return this.EventoInputDataContractValidator.Validate(input).IsValid;
         }
@@ -150,7 +152,6 @@ namespace Cargos.API.Service
         #endregion
 
         #region GET
-
         public CargoOutputDataContract GetCargoById(long id)
         {
             Cargo cargo = this.CargoRepository.GetById(id);
@@ -235,6 +236,43 @@ namespace Cargos.API.Service
                 Type = cargo.Type.ToString(),
                 User_Id = cargo.User_Id,
             };
+        }
+
+        public bool CheckFormatCargoUpdate(CargoUpdateDataContract cargo)
+        {
+            return this.CargoUpdateDataContractValidator.Validate(cargo).IsValid;
+        }
+
+        public IList<string> GetErrorsCheckCargoUpdate(CargoUpdateDataContract cargo)
+        {
+            IList<string> errors = new List<string>();
+
+            var validationResult = this.CargoUpdateDataContractValidator.Validate(cargo);
+
+            foreach (var error in validationResult.Errors)
+                errors.Add(error.ToString());
+
+            return errors;
+        }
+
+        public bool CheckStateCargo(CargoUpdateDataContract cargo_Update)
+        {
+            Cargo cargo = this.CargoRepository.GetById(cargo_Update.Cargo_Id);
+
+            if (cargo.State == StateCargo.Deuda)
+                return true;
+
+            return false;
+        }
+
+        public bool CheckExistCargo(CargoUpdateDataContract cargo_Update)
+        {
+            Cargo cargo = this.CargoRepository.GetById(cargo_Update.Cargo_Id);
+
+            if (cargo == null)
+                return false;
+
+            return true;
         }
 
         #endregion

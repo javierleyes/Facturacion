@@ -25,7 +25,7 @@ namespace Cargos
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // IoC Context 
             services.AddDbContext<ApplicationDBContext>(option => option.UseLazyLoadingProxies().UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FACTURACION;"));
@@ -37,6 +37,7 @@ namespace Cargos
 
             // IoC Validators
             services.AddSingleton<IValidator<EventoInputDataContract>, EventoInputDataContractValidator>();
+            services.AddSingleton<IValidator<CargoUpdateDataContract>, CargoUpdateDataContractValidator>();
 
             // IoC Services
             services.AddTransient<ICargoService, CargoService>();

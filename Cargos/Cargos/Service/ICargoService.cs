@@ -6,9 +6,9 @@ namespace Cargos.API.Service
     public interface ICargoService
     {
         #region POST
-        bool CheckEvento(EventoInputDataContract input);
-        IList<string> GetErrorsCheckEvento(EventoInputDataContract input);
-        CargoOutputDataContract CreateEvento(EventoInputDataContract input);
+        bool CheckFormatEventoInput(EventoInputDataContract evento);
+        IList<string> GetErrorsCheckEvento(EventoInputDataContract evento);
+        CargoOutputDataContract CreateEvento(EventoInputDataContract evento);
         #endregion
 
         #region GET
@@ -18,6 +18,10 @@ namespace Cargos.API.Service
         #endregion
 
         #region PUT
+        bool CheckFormatCargoUpdate(CargoUpdateDataContract cargo_Update);
+        bool CheckExistCargo(CargoUpdateDataContract cargo_Update);
+        bool CheckStateCargo(CargoUpdateDataContract cargo_Update);
+        IList<string> GetErrorsCheckCargoUpdate(CargoUpdateDataContract cargo);
         CargoOutputDataContract UpdateCargo(CargoUpdateDataContract cargo);
         #endregion
     }

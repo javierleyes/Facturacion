@@ -17,11 +17,10 @@ namespace Cargos.API.Controllers
         }
 
         #region POST
-
         [HttpPost]
         public IActionResult Post(EventoInputDataContract input)
         {
-            if (!this.CargoService.CheckEvento(input))
+            if (!this.CargoService.CheckFormatEventoInput(input))
             {
                 var errors = this.CargoService.GetErrorsCheckEvento(input);
                 return BadRequest(errors);
@@ -31,24 +30,31 @@ namespace Cargos.API.Controllers
 
             return StatusCode(StatusCodes.Status201Created, cargo);
         }
-
         #endregion
 
         #region PUT
         [HttpPut]
-        public IActionResult Put(CargoUpdateDataContract cargo)
+        public IActionResult Put(CargoUpdateDataContract input)
         {
-            // validar input
-            // validar si existe el cargo id
+            if (!this.CargoService.CheckFormatCargoUpdate(input))
+            {
+                var errors = this.CargoService.GetErrorsCheckCargoUpdate(input);
+                return BadRequest(errors);
+            }
 
-            var output = this.CargoService.UpdateCargo(cargo);
+            if (!this.CargoService.CheckExistCargo(input))
+                return BadRequest($"No existe cargo con id: {input.Cargo_Id}");
+
+            if (!this.CargoService.CheckStateCargo(input))
+                return BadRequest($"No existe deuda para el cargo con id: {input.Cargo_Id}");
+
+            var output = this.CargoService.UpdateCargo(input);
 
             return Ok(output);
         }
         #endregion
 
         #region GET
-
         [HttpGet("[action]/{id}")]
         public IActionResult GetCargoById(long id)
         {
@@ -81,7 +87,6 @@ namespace Cargos.API.Controllers
 
             return Ok(debt);
         }
-
         #endregion
     }
 }
