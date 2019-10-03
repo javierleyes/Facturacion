@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using FluentValidation;
 using Pagos.API.DataContract;
 using Pagos.Domain;
@@ -94,6 +95,42 @@ namespace Pagos.API.Service
                     cargo.Amount -= payment_Amount;
                     payment_Amount = 0;
                 }
+
+
+
+
+
+
+
+                CargoUpdateDataContract cargo_Update = new CargoUpdateDataContract()
+                {
+                    Cargo_Id = constancia.Cargo_Id,
+                    Payment_Debt = constancia.Amount,
+                };
+
+
+
+                string uri = "https://localhost:44311/";
+                string action = "api/Cargos";
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(uri);
+
+                    var putTask = client.PutAsJsonAsync(action, cargo_Update);
+                    putTask.Wait();
+
+                    var result = putTask.Result;
+
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                    }
+                }
+
+
+
+
 
                 pago.Constancias.Add(constancia);
             }

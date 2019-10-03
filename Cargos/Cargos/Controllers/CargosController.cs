@@ -43,7 +43,7 @@ namespace Cargos.API.Controllers
             }
 
             if (!this.CargoService.CheckExistCargo(input))
-                return BadRequest($"No existe cargo con id: {input.Cargo_Id}");
+                return NotFound($"No existe cargo con id: {input.Cargo_Id}");
 
             if (!this.CargoService.CheckStateCargo(input))
                 return BadRequest($"No existe deuda para el cargo con id: {input.Cargo_Id}");
