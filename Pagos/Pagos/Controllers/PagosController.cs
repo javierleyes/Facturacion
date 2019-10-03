@@ -41,6 +41,17 @@ namespace Pagos.API.Controllers
         #endregion
 
         #region GET
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetPagoById(long id)
+        {
+            var pago = this.PagoService.GetPagoById(id);
+
+            if (pago == null)
+                return NotFound($"No existe el pago con id: {id}");
+
+            return Ok(pago);
+        }
+
         #endregion
     }
 }

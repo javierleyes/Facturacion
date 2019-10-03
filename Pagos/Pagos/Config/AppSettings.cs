@@ -1,4 +1,4 @@
-﻿namespace Pagos.API.Infrastructure
+﻿namespace Pagos.API.Config
 {
     public class AppSettings
     {

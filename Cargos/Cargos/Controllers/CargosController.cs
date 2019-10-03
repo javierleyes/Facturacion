@@ -61,7 +61,7 @@ namespace Cargos.API.Controllers
             var cargo = this.CargoService.GetCargoById(id);
 
             if (cargo == null)
-                return NotFound($"No se encontro el cargo con id: {id}");
+                return NotFound($"No existe el cargo con id: {id}");
 
             return Ok(cargo);
         }

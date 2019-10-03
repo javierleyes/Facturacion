@@ -1,16 +1,16 @@
-﻿using System;
+﻿using FluentValidation;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Pagos.API.Config;
+using Pagos.API.DataContract;
+using Pagos.Domain;
+using Pagos.Infrastructure.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using FluentValidation;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Pagos.API.DataContract;
-using Pagos.API.Infrastructure;
-using Pagos.Domain;
-using Pagos.Infrastructure.Repository;
 
 namespace Pagos.API.Service
 {
