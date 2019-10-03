@@ -1,5 +1,6 @@
 ﻿using Pagos.API.DataContract;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pagos.API.Service
 {
@@ -9,7 +10,8 @@ namespace Pagos.API.Service
         bool CheckInput(PagoInputDataContract input);
         bool CheckAmountDebt(PagoInputDataContract input, DebtInputDataContract debt);
         IList<string> GetErrorsCheckPago(PagoInputDataContract input);
-        PagoOutputDataContract CreatePago(PagoInputDataContract input, DebtInputDataContract debt);
+        Task<DebtInputDataContract> GetDebtByUser(long id);
+        Task<PagoOutputDataContract> CreatePago(PagoInputDataContract input, DebtInputDataContract debt);
         #endregion
 
         #region GET

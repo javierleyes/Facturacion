@@ -24,8 +24,4 @@
     <ProjectReference Include="..\Pagos.Infrastructure\Pagos.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Service\APIConsumer\" />
-  </ItemGroup>
-
 </Project>

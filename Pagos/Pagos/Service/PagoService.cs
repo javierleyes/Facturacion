@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using FluentValidation;
+using Newtonsoft.Json;
 using Pagos.API.DataContract;
 using Pagos.Domain;
 using Pagos.Infrastructure.Repository;
@@ -50,7 +53,36 @@ namespace Pagos.API.Service
             return errors;
         }
 
-        public PagoOutputDataContract CreatePago(PagoInputDataContract input, DebtInputDataContract debt)
+        public async Task<DebtInputDataContract> GetDebtByUser(long user_Id)
+        {
+            // parametrizar en config
+            string uri = "https://localhost:44311/";
+
+            string action = "api/Cargos/GetDebtByUser/";
+            string id = user_Id.ToString();
+
+            DebtInputDataContract debt = new DebtInputDataContract();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync($"{action}{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var entity_Response = response.Content.ReadAsStringAsync().Result;
+
+                    debt = JsonConvert.DeserializeObject<DebtInputDataContract>(entity_Response);
+                }
+            }
+
+            return debt;
+        }
+
+        public async Task<PagoOutputDataContract> CreatePago(PagoInputDataContract input, DebtInputDataContract debt)
         {
             decimal payment_Amount = GetLegalAmount(input.Currency, input.Amount);
 
@@ -62,14 +94,14 @@ namespace Pagos.API.Service
                 Amount_Legal = payment_Amount,
             };
 
-            AddCargo(debt, payment_Amount, pago);
+            await AddCargo(debt, payment_Amount, pago);
 
             PagoRepository.Save(pago);
 
             return this.GetPagoById(pago.Id);
         }
 
-        private void AddCargo(DebtInputDataContract debt, decimal payment_Amount, Pago pago)
+        private async Task AddCargo(DebtInputDataContract debt, decimal payment_Amount, Pago pago)
         {
             foreach (var cargo in debt.Cargos)
             {
@@ -96,43 +128,30 @@ namespace Pagos.API.Service
                     payment_Amount = 0;
                 }
 
+                if (await this.UpdateCargo(constancia))
+                    pago.Constancias.Add(constancia);
+            }
+        }
 
+        private async Task<bool> UpdateCargo(Constancia constancia)
+        {
+            CargoUpdateDataContract cargo_Update = new CargoUpdateDataContract()
+            {
+                Cargo_Id = constancia.Cargo_Id,
+                Payment_Debt = constancia.Amount,
+            };
 
+            // parametrizar en configuraciones
+            string uri = "https://localhost:44311/";
+            string action = "api/Cargos";
 
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
 
+                var putTask = await client.PutAsJsonAsync(action, cargo_Update);
 
-
-                CargoUpdateDataContract cargo_Update = new CargoUpdateDataContract()
-                {
-                    Cargo_Id = constancia.Cargo_Id,
-                    Payment_Debt = constancia.Amount,
-                };
-
-
-
-                string uri = "https://localhost:44311/";
-                string action = "api/Cargos";
-
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(uri);
-
-                    var putTask = client.PutAsJsonAsync(action, cargo_Update);
-                    putTask.Wait();
-
-                    var result = putTask.Result;
-
-                    if (result.IsSuccessStatusCode)
-                    {
-
-                    }
-                }
-
-
-
-
-
-                pago.Constancias.Add(constancia);
+                return (putTask.IsSuccessStatusCode) ? true : false;
             }
         }
 
@@ -144,7 +163,6 @@ namespace Pagos.API.Service
 
             return amount_currency;
         }
-
         #endregion
 
         #region GET
@@ -165,7 +183,6 @@ namespace Pagos.API.Service
                 Constancias = pago.Constancias.Select(x => new ConstanciaOutputDataContract() { Cargo_Id = x.Cargo_Id, Amount = x.Amount }).ToList(),
             };
         }
-
         #endregion
     }
 }
