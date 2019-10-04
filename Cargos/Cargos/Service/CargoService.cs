@@ -10,6 +10,9 @@ namespace Cargos.API.Service
 {
     public class CargoService : ICargoService
     {
+        private const string SIN_DEUDA = "El usuario no tiene cargos pendientes.";
+        private const string CON_DEUDA = "El usuario tiene deudas pendientes.";
+
         private ICargoRepository CargoRepository { get; set; }
         private IFacturaRepository FacturaRepository { get; set; }
         private IEventoRepository EventoRepository { get; set; }
@@ -214,6 +217,31 @@ namespace Cargos.API.Service
 
             return debt;
         }
+
+        public UserOutputDataContract GetStatusUser(long id)
+        {
+            UserOutputDataContract user = new UserOutputDataContract
+            {
+                User_Id = id,
+            };
+
+            DeudaUsuarioOutputDataContract debt = this.GetDeudaByUser(id);
+
+            if (debt == null)
+                return null;
+
+            if (debt.Amount == 0)
+                user.State = SIN_DEUDA;
+            else
+                user.State = CON_DEUDA;
+
+            return user;
+        }
+
+        public bool UserExist(long id)
+        {
+            return this.CargoRepository.GetAll().Any(x => x.User_Id == id);
+        }
         #endregion
 
         #region PUT
@@ -274,7 +302,6 @@ namespace Cargos.API.Service
 
             return true;
         }
-
         #endregion
     }
 }

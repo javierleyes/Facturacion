@@ -53,6 +53,8 @@ namespace Pagos.Infrastructure.Migrations
 
                     b.Property<int>("Currency");
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<long>("User_Id");
 
                     b.HasKey("Id");
@@ -63,7 +65,7 @@ namespace Pagos.Infrastructure.Migrations
             modelBuilder.Entity("Pagos.Domain.Constancia", b =>
                 {
                     b.HasOne("Pagos.Domain.Pago")
-                        .WithMany("Cargos_Id")
+                        .WithMany("Constancias")
                         .HasForeignKey("PagoId");
                 });
 #pragma warning restore 612, 618

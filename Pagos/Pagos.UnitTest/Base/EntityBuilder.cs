@@ -22,6 +22,7 @@ namespace Pagos.RepositoryTest
                 Amount_Legal = Convert.ToDecimal(9006.00),
                 Currency = Currency.USD,
                 User_Id = 200,
+                Date = DateTime.Now,
             };
             pago.Constancias.Add(BuildConstancia());
 

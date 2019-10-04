@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Pagos.API.DataContract
 {
@@ -9,6 +10,7 @@ namespace Pagos.API.DataContract
         public decimal Amount_Currency { get; set; }
         public decimal Amount_Legal { get; set; }
         public long User_id { get; set; }
+        public DateTime Date { get; set; }
         public IList<ConstanciaOutputDataContract> Constancias { get; set; }
 
         public PagoOutputDataContract()

@@ -97,6 +97,7 @@ namespace Pagos.API.Service
                 Currency = (Currency)Enum.Parse(typeof(Currency), input.Currency),
                 Amount_Currency = input.Amount,
                 Amount_Legal = payment_Amount,
+                Date = DateTime.Now,
             };
 
             await AddCargo(debt, payment_Amount, pago);
@@ -184,6 +185,7 @@ namespace Pagos.API.Service
                 Amount_Currency = pago.Amount_Currency,
                 Amount_Legal = pago.Amount_Legal,
                 User_id = pago.User_Id,
+                Date = pago.Date,
                 Constancias = pago.Constancias.Select(x => new ConstanciaOutputDataContract() { Cargo_Id = x.Cargo_Id, Amount = x.Amount }).ToList(),
             };
         }

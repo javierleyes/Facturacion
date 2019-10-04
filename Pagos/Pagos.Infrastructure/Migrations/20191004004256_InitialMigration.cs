@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pagos.Infrastructure.Migrations
@@ -20,7 +21,8 @@ namespace Pagos.Infrastructure.Migrations
                     User_Id = table.Column<long>(nullable: false),
                     Currency = table.Column<int>(nullable: false),
                     Amount_Currency = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Amount_Legal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Amount_Legal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

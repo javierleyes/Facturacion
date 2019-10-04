@@ -87,6 +87,17 @@ namespace Cargos.API.Controllers
 
             return Ok(debt);
         }
+
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetStatusUser(long id)
+        {
+            if (this.CargoService.UserExist(id) == false)
+                return NotFound($"No existe el usuario id: {id}");
+
+            var status = this.CargoService.GetStatusUser(id);
+
+            return Ok(status);
+        }
         #endregion
     }
 }

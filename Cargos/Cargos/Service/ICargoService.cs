@@ -15,6 +15,8 @@ namespace Cargos.API.Service
         CargoOutputDataContract GetCargoById(long id);
         FacturaOutputDataContract GetFacturaById(long id);
         DeudaUsuarioOutputDataContract GetDeudaByUser(long id);
+        bool UserExist(long id);
+        UserOutputDataContract GetStatusUser(long id);
         #endregion
 
         #region PUT
