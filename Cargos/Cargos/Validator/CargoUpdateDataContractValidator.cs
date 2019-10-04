@@ -17,7 +17,7 @@ namespace Cargos.API.Validator
 
         private bool ValidateAmount(decimal amount)
         {
-            Regex rgx = new Regex(@"^\d+\,\d{2}?$");
+            Regex rgx = new Regex(@"^\d+\.\d{2}?$");
 
             return rgx.IsMatch(amount.ToString());
         }
