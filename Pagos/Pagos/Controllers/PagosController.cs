@@ -52,6 +52,16 @@ namespace Pagos.API.Controllers
             return Ok(pago);
         }
 
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetPagoByUser(long id)
+        {
+            if (this.PagoService.UserExist(id) == false)
+                return NotFound($"No existe el usuario id: {id}");
+
+            var status = this.PagoService.GetPagoByUser(id);
+
+            return Ok(status);
+        }
         #endregion
     }
 }

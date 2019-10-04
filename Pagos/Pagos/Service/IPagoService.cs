@@ -16,6 +16,8 @@ namespace Pagos.API.Service
 
         #region GET
         PagoOutputDataContract GetPagoById(long id);
+        bool UserExist(long id);
+        IList<PagoOutputDataContract> GetPagoByUser(long id);
         #endregion
     }
 }

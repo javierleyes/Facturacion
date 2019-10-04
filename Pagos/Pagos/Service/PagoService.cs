@@ -189,6 +189,36 @@ namespace Pagos.API.Service
                 Constancias = pago.Constancias.Select(x => new ConstanciaOutputDataContract() { Cargo_Id = x.Cargo_Id, Amount = x.Amount }).ToList(),
             };
         }
+
+        public bool UserExist(long id)
+        {
+            return this.PagoRepository.GetAll().Any(x => x.User_Id == id);
+        }
+
+        public IList<PagoOutputDataContract> GetPagoByUser(long id)
+        {
+            IList<PagoOutputDataContract> output = new List<PagoOutputDataContract>();
+
+            IList<Pago> pagos = this.PagoRepository.GetAll().Where(x => x.User_Id == id).ToList();
+
+            foreach (var pago in pagos)
+            {
+                PagoOutputDataContract pago_output = new PagoOutputDataContract()
+                {
+                    Pago_Id = pago.Id,
+                    Currency = pago.Currency.ToString(),
+                    Amount_Currency = pago.Amount_Currency,
+                    Amount_Legal = pago.Amount_Legal,
+                    User_id = pago.User_Id,
+                    Date = pago.Date,
+                    Constancias = pago.Constancias.Select(x => new ConstanciaOutputDataContract() { Cargo_Id = x.Cargo_Id, Amount = x.Amount }).ToList(),
+                };
+
+                output.Add(pago_output);
+            }
+
+            return output;
+        }
         #endregion
     }
 }
