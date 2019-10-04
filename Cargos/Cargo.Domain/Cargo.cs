@@ -19,9 +19,11 @@ namespace Cargos.Domain
         public decimal Balance { get; set; }
 
         [Required]
+        [Range(1,2)]
         public StateCargo State { get; set; }
 
         [Required]
+        [Range(0,3)]
         public TypeCargo Type { get; set; }
 
         [Required]

@@ -12,6 +12,7 @@ namespace Cargos.Domain
         public long User_Id { get; set; }
 
         [Required]
+        [Range(1,2)]
         public Currency Currency { get; set; }
 
         [Required]
@@ -22,6 +23,7 @@ namespace Cargos.Domain
         public DateTime Date { get; set; }
 
         [Required]
+        [Range(1,8)]
         public TypeEvento Type { get; set; }
 
         public Evento()

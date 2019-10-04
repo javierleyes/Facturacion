@@ -14,6 +14,7 @@ namespace Cargos.Domain
         public virtual IList<Cargo> Cargos { get; set; }
 
         [Required]
+        [Range(1,12)]
         public int Month { get; set; }
 
         [Required]

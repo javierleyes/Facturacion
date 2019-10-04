@@ -13,6 +13,7 @@ namespace Pagos.Domain
         public long User_Id { get; set; }
 
         [Required]
+        [Range(1,2)]
         public Currency Currency { get; set; }
 
         [Required]

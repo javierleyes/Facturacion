@@ -10,8 +10,8 @@ using Pagos.Infrastructure;
 namespace Pagos.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20191004004256_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20191004060349_initialmigration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
