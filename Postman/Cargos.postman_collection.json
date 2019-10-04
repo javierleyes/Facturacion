@@ -1,0 +1,578 @@
+{
+	"info": {
+		"_postman_id": "42d00159-1976-4ca8-bc35-f3da5d2d49cd",
+		"name": "Cargos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Factura",
+			"item": [
+				{
+					"name": "Get_Factura_Ok",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetFacturaById/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetFacturaById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Factura_Not_Exist",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetFacturaById/5500",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetFacturaById",
+								"5500"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Cargo",
+			"item": [
+				{
+					"name": "Get_Cargo_Ok",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetCargoById/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetCargoById",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Debt_Ok",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetDebtByUser/51",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetDebtByUser",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Debt_Not_Exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetDebtByUser/595",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetDebtByUser",
+								"595"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Cargo_Not_Exist",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetCargoById/500014",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetCargoById",
+								"500014"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Cargo_Ok",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Amount\": 100.00, \r\n\t\"Currency\": \"ARS\",\r\n\t\"User_id\": 51,\r\n\t\"Event_type\": \"CLASIFICADO\",\r\n\t\"Date\": \"2019-10-30T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put_CargoId_Not_Exist",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Cargo_Id\": 4, \r\n\t\"Payment_Debt\": \"9006.00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Payment_Debit_Incorrect",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Cargo_Id\": 1, \r\n\t\"Payment_Debt\": \"9006.0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Cargo_Ok",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Cargo_Id\": 1, \r\n\t\"Payment_Debt\": \"9006.00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_User_Incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Amount\": 150.10, \r\n\t\"Currency\": \"USD\",\r\n\t\"User_id\": 0,\r\n\t\"Event_type\": \"CLASIFICADO\",\r\n\t\"Date\": \"2019-10-30T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Amount_Incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Amount\": 150.0, \r\n\t\"Currency\": \"USD\",\r\n\t\"User_id\": 51,\r\n\t\"Event_type\": \"CLASIFICADO\",\r\n\t\"Date\": \"2019-10-30T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Currency_Incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Amount\": 150.10, \r\n\t\"Currency\": \"US\",\r\n\t\"User_id\": 51,\r\n\t\"Event_type\": \"CLASIFICADO\",\r\n\t\"Date\": \"2019-10-30T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Event_Type_Incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Amount\": 150.10, \r\n\t\"Currency\": \"USD\",\r\n\t\"User_id\": 51,\r\n\t\"Event_type\": \"CLASIFI\",\r\n\t\"Date\": \"2019-10-30T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Year_Incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Amount\": 150.10, \r\n\t\"Currency\": \"USD\",\r\n\t\"User_id\": 51,\r\n\t\"Event_type\": \"CLASIFICADO\",\r\n\t\"Date\": \"2020-10-30T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Month_Incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Amount\": 150.10, \r\n\t\"Currency\": \"USD\",\r\n\t\"User_id\": 51,\r\n\t\"Event_type\": \"CLASIFICADO\",\r\n\t\"Date\": \"2019-08-30T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Get_Status_User_Ok",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetStatusUser/51",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetStatusUser",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Status_User_Not_Exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/api/Cargos/GetStatusUser/3000",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"api",
+								"Cargos",
+								"GetStatusUser",
+								"3000"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
