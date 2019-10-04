@@ -13,7 +13,7 @@ namespace Cargos.RepositoryTest
                 Currency = Currency.USD,
                 Date = DateTime.Now,
                 Type = TypeEvento.MERCADOPAGO,
-                User_Id = 450,
+                User_Id = 60,
             };
         }
 
@@ -25,7 +25,7 @@ namespace Cargos.RepositoryTest
                 Balance = Convert.ToDecimal(150.10),
                 State = StateCargo.Deuda,
                 Type = TypeCargo.SERVICIOS,
-                User_Id = 51,
+                User_Id = 60,
                 Evento = BuildEvento(),
             };
         }
@@ -38,8 +38,6 @@ namespace Cargos.RepositoryTest
                 Year = 2019,
                 User_Id = 60,
             };
-
-            factura.Cargos.Add(BuildCargo());
 
             return factura;
         }

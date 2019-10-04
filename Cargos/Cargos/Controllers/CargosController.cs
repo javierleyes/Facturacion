@@ -80,10 +80,10 @@ namespace Cargos.API.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult GetDebtByUser(long id)
         {
-            var debt = this.CargoService.GetDeudaByUser(id);
+            if (this.CargoService.UserExist(id) == false)
+                return NotFound($"No existe el usuario id: {id}");
 
-            if (debt.Amount == 0)
-                return NotFound($"No existe deuda para el usuario id: {id}");
+            var debt = this.CargoService.GetDeudaByUser(id);
 
             return Ok(debt);
         }

@@ -4,7 +4,6 @@ using Cargos.Infrastructure.Repository;
 using Cargos.RepositoryTest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Cargos.RepositoryTestCase
 {

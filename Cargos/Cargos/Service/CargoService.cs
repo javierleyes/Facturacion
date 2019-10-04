@@ -108,8 +108,6 @@ namespace Cargos.API.Service
                 Type = this.GetTypeCargoByEventType(evento),
             };
 
-            this.CargoRepository.Save(cargo);
-
             bill.Cargos.Add(cargo);
 
             this.FacturaRepository.Update(bill);

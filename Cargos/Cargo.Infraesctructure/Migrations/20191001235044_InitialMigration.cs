@@ -58,7 +58,7 @@ namespace Cargos.Infrastructure.Migrations
                     State = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     EventoId = table.Column<long>(nullable: false),
-                    FacturaId = table.Column<long>(nullable: true)
+                    FacturaId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
