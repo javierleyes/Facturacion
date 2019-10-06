@@ -67,7 +67,7 @@ namespace Cargos.API.Controllers
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult GetFacturaById(long id)
+        public IActionResult GetBillById(long id)
         {
             var factura = this.CargoService.GetBillById(id);
 
