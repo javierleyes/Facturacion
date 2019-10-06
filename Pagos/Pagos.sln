@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pagos.Domain", "Pagos.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pagos.Infrastructure", "Pagos.Infrastructure\Pagos.Infrastructure.csproj", "{A47D6039-1E8C-4853-90E5-CF45CE82A88E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pagos.RepositoryTest", "Pagos.UnitTest\Pagos.RepositoryTest.csproj", "{2E327276-3DA4-477F-8928-C0486FAED354}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pagos.RepositoryTest", "Pagos.UnitTest\Pagos.RepositoryTest.csproj", "{2E327276-3DA4-477F-8928-C0486FAED354}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pagos.ServiceTest", "Pagos.ServiceTest\Pagos.ServiceTest.csproj", "{1B96B1BC-0576-425D-98D3-1CA1F74F01D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,12 +37,17 @@ Global
 		{2E327276-3DA4-477F-8928-C0486FAED354}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E327276-3DA4-477F-8928-C0486FAED354}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E327276-3DA4-477F-8928-C0486FAED354}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B96B1BC-0576-425D-98D3-1CA1F74F01D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B96B1BC-0576-425D-98D3-1CA1F74F01D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B96B1BC-0576-425D-98D3-1CA1F74F01D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B96B1BC-0576-425D-98D3-1CA1F74F01D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2E327276-3DA4-477F-8928-C0486FAED354} = {AFF3010D-B1F8-40CC-A3C3-959E7A236A9F}
+		{1B96B1BC-0576-425D-98D3-1CA1F74F01D0} = {AFF3010D-B1F8-40CC-A3C3-959E7A236A9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACA2D89D-19FA-4090-8C10-F4D44CD89745}
