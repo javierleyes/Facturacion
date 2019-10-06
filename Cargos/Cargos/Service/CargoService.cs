@@ -171,7 +171,7 @@ namespace Cargos.API.Service
             };
         }
 
-        public FacturaOutputDataContract GetFacturaById(long id)
+        public FacturaOutputDataContract GetBillById(long id)
         {
             Factura bill = this.FacturaRepository.GetById(id);
 
@@ -187,8 +187,30 @@ namespace Cargos.API.Service
                 Cargos_Id = bill.Cargos.Select(x => x.Id).ToList(),
             };
         }
+        public IList<FacturaOutputDataContract> GetBillsByUser(long id)
+        {
+            IList<FacturaOutputDataContract> facturas = new List<FacturaOutputDataContract>();
 
-        public DeudaUsuarioOutputDataContract GetDeudaByUser(long id)
+            IList<Factura> bills = this.FacturaRepository.GetAll().Where(x => x.User_Id == id).ToList();
+
+            foreach (var bill in bills)
+            {
+                FacturaOutputDataContract output = new FacturaOutputDataContract()
+                {
+                    Factura_Id = bill.Id,
+                    User_Id = bill.User_Id,
+                    Month = bill.Month,
+                    Year = bill.Year,
+                    Cargos_Id = bill.Cargos.Select(x => x.Id).ToList(),
+                };
+
+                facturas.Add(output);
+            }
+
+            return facturas;
+        }
+
+        public DeudaUsuarioOutputDataContract GetDebtByUser(long id)
         {
             IList<Cargo> cargos = this.CargoRepository.GetAll().Where(x => x.User_Id == id && x.State == StateCargo.Deuda).ToList();
 
@@ -198,7 +220,7 @@ namespace Cargos.API.Service
             DeudaUsuarioOutputDataContract debt = new DeudaUsuarioOutputDataContract();
             debt.Amount = cargos.Sum(x => x.Balance);
 
-            foreach (Cargo cargo in cargos)
+            foreach (var cargo in cargos)
             {
                 CargoOutputDataContract cargo_Output = new CargoOutputDataContract()
                 {
@@ -223,7 +245,7 @@ namespace Cargos.API.Service
                 User_Id = id,
             };
 
-            DeudaUsuarioOutputDataContract debt = this.GetDeudaByUser(id);
+            DeudaUsuarioOutputDataContract debt = this.GetDebtByUser(id);
 
             if (debt == null)
                 return null;

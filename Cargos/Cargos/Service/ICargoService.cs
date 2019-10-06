@@ -13,10 +13,11 @@ namespace Cargos.API.Service
 
         #region GET
         CargoOutputDataContract GetCargoById(long id);
-        FacturaOutputDataContract GetFacturaById(long id);
+        FacturaOutputDataContract GetBillById(long id);
+        IList<FacturaOutputDataContract> GetBillsByUser(long id);
 
         bool UserExist(long id);
-        DeudaUsuarioOutputDataContract GetDeudaByUser(long id);
+        DeudaUsuarioOutputDataContract GetDebtByUser(long id);
         UserOutputDataContract GetStatusUser(long id);
         #endregion
 
